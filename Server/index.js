@@ -43,10 +43,21 @@ app.use((req, res, next) => {
   next();
 });
 
-// Routes
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRouter);
-app.use("/api/listing", listingRouter);
+// Root and health routes (for Render checks and quick status)
+app.get('/', (_req, res) => {
+  res.send('Realestate API is running');
+});
+app.get('/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
+app.get('/api', (_req, res) => {
+  res.json({ status: 'ok', message: 'API base', routes: ['/api/auth', '/api/user', '/api/listing'] });
+});
+
+// API Routes
+app.use('/api/user', userRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/listing', listingRouter);
 
 // Error handler
 app.use((err, req, res, next) => {
