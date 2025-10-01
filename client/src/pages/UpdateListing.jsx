@@ -135,10 +135,11 @@ export default function UpdateListing() {
       setError(false);
 
       const res = await fetch(`${API_BASE}/listing/update/${params.listingId}`, {
-        method: "POST", // or PUT (depends on your backend route)
+        method: "POST", // backend route expects POST
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,

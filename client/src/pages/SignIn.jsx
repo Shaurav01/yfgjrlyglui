@@ -29,6 +29,7 @@ export default function SignIn() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // include cookies for cross-site auth
         body: JSON.stringify(formData),
       });
       const data = await res.json();

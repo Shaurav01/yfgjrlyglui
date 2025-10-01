@@ -30,6 +30,9 @@ export default function CreateListing() {
   const CLOUD_NAME = "drklzrrbt"; // Your Cloudinary cloud name
   const UPLOAD_PRESET = "real_estate"; // The unsigned preset you created
 
+  // ✅ API Base URL from .env
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
   const handleImageSubmit = async () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -108,9 +111,10 @@ export default function CreateListing() {
       setLoading(true);
       setError(false);
 
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch(`${API_BASE}/listing/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: 'include',
         body: JSON.stringify({ ...formData, userRef: currentUser._id }),
       });
 
